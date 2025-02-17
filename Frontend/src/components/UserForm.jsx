@@ -15,8 +15,21 @@ const UserForm = () => {
         email,
       });
       setMessage(`User created with ID: ${response.data.id}`);
+      setName(''); //clear the name field
+      setEmail(''); //clear the email field 
     } catch (error) {
-      setMessage('Error creating user');
+      if(error.response){
+        // The request was made, but the server responded with an error
+        setMessage(`Error: ${error.response.data.message || 'Something went wrong'}`);
+      }else if(error.request){
+        // The request was made, but no response was received
+        setMessage('Error: No response from the server');
+      }else{
+        // Something else happened
+        setMessage('Error: Something went wrong');
+
+      }
+    
       console.error(error);
     }
   };
